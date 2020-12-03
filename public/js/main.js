@@ -1,4 +1,3 @@
-
 AFRAME.registerComponent('change-color-on-hover', {
     schema: {
 	color: {default: 'red'},
@@ -24,8 +23,27 @@ AFRAME.registerComponent('change-color-on-hover', {
 	    data.open = !data.open;
     });
     }
-  });
+});
 
+AFRAME.registerPrimitive("a-wall", {
+	defaultComponents: {
+		geometry: {
+			primitive: 'plane',
+			height: 70,
+			width:10
+		},
+		material: {
+			shader: 'standard',
+			color: 'rgb(175,180,132)',
+			metalness: 0.1,
+			roughness: 0.9
+		},
+	},
+	mappings: {
+		height: 'geometry.height',
+		width: 'geometry.width',
+	}
+});
 window.onload = function() {
 	const scene = document.querySelector("a-scene");
 	window.door = scene.querySelector(".door");
