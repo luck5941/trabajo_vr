@@ -34,15 +34,44 @@ AFRAME.registerComponent("change-door-animation", {
 	init: function() {
 		let el = this.el;
 		let data = this.data;
+		data.position = el.object3D.position;
+		data.dimension = {};
+		data.dimension.width = el.getAttribute("width") || 1;
+		data.dimension.height = el.getAttribute("height") || 1;
 		el.on("click", function() {
-			console.log("click");
-			if (data.open) door.components.animation.data.to = "5 4 -32.5"
-			else door.components.animation.data.to = "5 4 -37.5"
+			if (data.open) this.components.animation.data.to = "5 4 -32.5"
+			else this.components.animation.data.to = "5 4 -37.5"
 			data.open = !data.open;
-				//el.components.animation
+		});
+		/*
+		el.on("mouseenter", function() {
+			let camera_pos = document.getElementById("camera").object3D.position;
+		});
+		*/
+	}
+});
+AFRAME.registerComponent("play-video", {
+	schema: {
+		video: {default: ""},
+		play: {default: false}
+	},
+	init: function() {
+		let el = this.el;
+		let data = this.data;
+		if (data.play && data.video) 
+			document.querySelector(`#${data.video}`).play();
+		el.on("click", function() {
+			if (!data.video)
+				throw "Error: Video was necesary";
+			if (!data.play)
+				document.querySelector(`#${data.video}`).play();
+			else
+				document.querySelector(`#${data.video}`).pause();
+			data.play = !data.play;
 		});
 	}
 });
+		
 
 AFRAME.registerPrimitive("a-wall", {
 	defaultComponents: {
@@ -76,9 +105,3 @@ AFRAME.registerComponent("a-world", {
 	}
 });
 
-window.onload = function() {
-	const scene = document.querySelector("a-scene");
-	window.door = scene.querySelector(".door");
-
-
-}
