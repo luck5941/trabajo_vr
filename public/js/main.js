@@ -38,16 +38,27 @@ AFRAME.registerComponent("change-door-animation", {
 		data.dimension = {};
 		data.dimension.width = el.getAttribute("width") || 1;
 		data.dimension.height = el.getAttribute("height") || 1;
-		el.on("click", function() {
-			if (data.open) this.components.animation.data.to = "5 4 -32.5"
-			else this.components.animation.data.to = "5 4 -37.5"
+
+		let changeState = function(){
+			if (data.open) el.components.animation.data.to = "5 4 -32.5"
+			else el.components.animation.data.to = "5 4 -37.5"
 			data.open = !data.open;
-		});
-		/*
+		}
+
+		el.on("click", changeState);
 		el.on("mouseenter", function() {
-			let camera_pos = document.getElementById("camera").object3D.position;
+			let {x, y, z} = document.getElementById("camera1").object3D.position;
+			data.position = el.object3D.position;
+			let extrem = [data.position.z + data.dimension.width/2, data.position.z - data.dimension.width/2];
+			if ((z > extrem[0] && z < extrem[1]) || (z < extrem[0] && z > extrem[1])) {
+				if (data.open) el.components.animation.data.to = "5 4 -32.5"
+				else el.components.animation.data.to = "5 4 -37.5"
+				data.open = !data.open;
+			} else 
+				if (data.open) el.components.animation.data.to = "5 4 -37.5"
+				else el.components.animation.data.to = "5 4 -32.5"
 		});
-		*/
+
 	}
 });
 AFRAME.registerComponent("play-video", {
