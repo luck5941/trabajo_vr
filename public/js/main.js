@@ -1,3 +1,4 @@
+/*
 AFRAME.registerComponent('change-color-on-hover', {
     schema: {
 	color: {default: 'red'},
@@ -24,6 +25,24 @@ AFRAME.registerComponent('change-color-on-hover', {
     });
     }
 });
+*/
+
+AFRAME.registerComponent("change-door-animation", {
+	schema: {
+		open: {default: false}
+	},
+	init: function() {
+		let el = this.el;
+		let data = this.data;
+		el.on("click", function() {
+			console.log("click");
+			if (data.open) door.components.animation.data.to = "5 4 -32.5"
+			else door.components.animation.data.to = "5 4 -37.5"
+			data.open = !data.open;
+				//el.components.animation
+		});
+	}
+});
 
 AFRAME.registerPrimitive("a-wall", {
 	defaultComponents: {
@@ -44,6 +63,19 @@ AFRAME.registerPrimitive("a-wall", {
 		width: 'geometry.width',
 	}
 });
+
+AFRAME.registerComponent("a-world", {
+	schema: {
+		url: {default: "#"}
+	}, init: function() {
+		let el = this.el;
+		let data = this.data;
+		el.on("click", function() {
+			window.location = data.url
+		});
+	}
+});
+
 window.onload = function() {
 	const scene = document.querySelector("a-scene");
 	window.door = scene.querySelector(".door");
