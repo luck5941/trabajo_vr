@@ -13,3 +13,13 @@ HTMLElement.prototype.rotate = function(x, y, z) {
 	this.object3D.rotation.y = y;
 	this.object3D.rotation.z = z;
 }
+
+
+function isOnSite(extrem, cp) {
+	let inSite = true;
+	for (let cord in extrem)
+		if (!((cp[cord] > extrem[cord][0] && cp[cord] < extrem[cord][1]) || 
+			(cp[cord] < extrem[cord][0] && cp[cord] > extrem[cord][1])))
+			inSite = false;
+	return inSite;
+}

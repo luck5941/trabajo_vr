@@ -47,16 +47,20 @@ AFRAME.registerComponent("change-door-animation", {
 
 		el.on("click", changeState);
 		el.on("mouseenter", function() {
-			let {x, y, z} = document.getElementById("camera1").object3D.position;
 			data.position = el.object3D.position;
-			let extrem = [data.position.z + data.dimension.width/2, data.position.z - data.dimension.width/2];
-			if ((z > extrem[0] && z < extrem[1]) || (z < extrem[0] && z > extrem[1])) {
+			let cameraPos = document.getElementById("camera1").object3D.position;
+			let extrem = {
+				"z": [data.position.z + data.dimension.width/2, data.position.z - data.dimension.width/2],
+				"x": [data.position.x + 2, data.position.x -2]
+			};
+			if(isOnSite(extrem, cameraPos)) {
 				if (data.open) el.components.animation.data.to = "15 4 -32.5"
 				else el.components.animation.data.to = "15 4 -37.5"
 				data.open = !data.open;
-			} else 
+			} else {
 				if (data.open) el.components.animation.data.to = "15 4 -37.5"
 				else el.components.animation.data.to = "15 4 -32.5"
+			}
 		});
 
 	}
@@ -110,12 +114,21 @@ AFRAME.registerComponent("a-world", {
 	}, init: function() {
 		let el = this.el;
 		let data = this.data;
+		data.dimension = {};
+		data.dimension.width = el.getAttribute("width") || 1;
+		data.dimension.height = el.getAttribute("height") || 1;
 		el.on("click", function() {
 			window.location = data.url
 		});
 
 		el.on("mouseenter", function() {
-			// TODO
+			data.position = el.object3D.position;
+			let cameraPos = document.getElementById("camera1").object3D.position;
+			let extrem = {
+				"z": [data.position.z + data.dimension.width/2, data.position.z - data.dimension.width/2],
+				"x": [data.position.x + 2, data.position.x -2]
+			};
+			if(isOnSite(extrem, cameraPos)) window.location = data.url
 		});
 	}
 });
