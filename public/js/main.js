@@ -40,8 +40,8 @@ AFRAME.registerComponent("change-door-animation", {
 		data.dimension.height = el.getAttribute("height") || 1;
 
 		let changeState = function(){
-			if (data.open) el.components.animation.data.to = "5 4 -32.5"
-			else el.components.animation.data.to = "5 4 -37.5"
+			if (data.open) el.components.animation.data.to = "15 4 -32.5"
+			else el.components.animation.data.to = "15 4 -37.5"
 			data.open = !data.open;
 		}
 
@@ -51,12 +51,12 @@ AFRAME.registerComponent("change-door-animation", {
 			data.position = el.object3D.position;
 			let extrem = [data.position.z + data.dimension.width/2, data.position.z - data.dimension.width/2];
 			if ((z > extrem[0] && z < extrem[1]) || (z < extrem[0] && z > extrem[1])) {
-				if (data.open) el.components.animation.data.to = "5 4 -32.5"
-				else el.components.animation.data.to = "5 4 -37.5"
+				if (data.open) el.components.animation.data.to = "15 4 -32.5"
+				else el.components.animation.data.to = "15 4 -37.5"
 				data.open = !data.open;
 			} else 
-				if (data.open) el.components.animation.data.to = "5 4 -37.5"
-				else el.components.animation.data.to = "5 4 -32.5"
+				if (data.open) el.components.animation.data.to = "15 4 -37.5"
+				else el.components.animation.data.to = "15 4 -32.5"
 		});
 
 	}
@@ -93,7 +93,7 @@ AFRAME.registerPrimitive("a-wall", {
 		},
 		material: {
 			shader: 'standard',
-			color: 'rgb(175,180,132)',
+			color: '#968a8a',
 			metalness: 0.1,
 			roughness: 0.9
 		},
@@ -112,6 +112,10 @@ AFRAME.registerComponent("a-world", {
 		let data = this.data;
 		el.on("click", function() {
 			window.location = data.url
+		});
+
+		el.on("mouseenter", function() {
+			// TODO
 		});
 	}
 });
