@@ -1,31 +1,12 @@
-/*
-AFRAME.registerComponent('change-color-on-hover', {
-    schema: {
-	color: {default: 'red'},
-	open: {default: false}
-
-    },
-
-    init: function () {
-      var data = this.data;
-      var el = this.el;  
-      var defaultColor = el.getAttribute('material').color;
-
-      el.on('mouseenter', function () {
-        el.setAttribute('color', data.color);
-      });
-
-      el.on('mouseleave', function () {
-        el.setAttribute('color', defaultColor);
-      });
-    el.on("click", function() {
-	    if (data.open) el.rotateDeg(0,0,0);
-	    else el.rotateDeg(0,-90,0);
-	    data.open = !data.open;
-    });
-    }
-});
-*/
+let dp = new DetectPosition();
+/**
+ * this components allow to make a door open and close when user is nearly
+ * for this propouse we compare the door position with the camera's position
+ * to open the door the user must be near or make click
+ *
+ * For the animation, it start with the 2 event but the target change for make it
+ * on the right direction or prevent it starts
+ * */
 
 AFRAME.registerComponent("change-door-animation", {
 	schema: {
@@ -39,6 +20,9 @@ AFRAME.registerComponent("change-door-animation", {
 		data.dimension.width = el.getAttribute("width") || 1;
 		data.dimension.height = el.getAttribute("height") || 1;
 
+
+
+
 		let changeState = function(){
 			if (data.open) el.components.animation.data.to = "15 4 -32.5"
 			else el.components.animation.data.to = "15 4 -37.5"
@@ -51,20 +35,23 @@ AFRAME.registerComponent("change-door-animation", {
 			let cameraPos = document.getElementById("camera1").object3D.position;
 			let extrem = {
 				"z": [data.position.z + data.dimension.width/2, data.position.z - data.dimension.width/2],
-				"x": [data.position.x + 2, data.position.x -2]
+				"x": [data.position.x + 4, data.position.x - 4]
 			};
 			if(isOnSite(extrem, cameraPos)) {
-				if (data.open) el.components.animation.data.to = "15 4 -32.5"
-				else el.components.animation.data.to = "15 4 -37.5"
-				data.open = !data.open;
+				changeState()
 			} else {
 				if (data.open) el.components.animation.data.to = "15 4 -37.5"
 				else el.components.animation.data.to = "15 4 -32.5"
 			}
 		});
 
+
 	}
 });
+
+/**
+ * this component allow to get basic controls into a-video (play, pause only)
+ */
 AFRAME.registerComponent("play-video", {
 	schema: {
 		video: {default: ""},
@@ -88,26 +75,10 @@ AFRAME.registerComponent("play-video", {
 });
 		
 
-AFRAME.registerPrimitive("a-wall", {
-	defaultComponents: {
-		geometry: {
-			primitive: 'plane',
-			height: 70,
-			width:10
-		},
-		material: {
-			shader: 'standard',
-			color: '#968a8a',
-			metalness: 0.1,
-			roughness: 0.9
-		},
-	},
-	mappings: {
-		height: 'geometry.height',
-		width: 'geometry.width',
-	}
-});
-
+/**
+ * this components represent the change of the world
+ * this means, allow to change to another projects
+ */
 AFRAME.registerComponent("a-world", {
 	schema: {
 		url: {default: "#"}
@@ -126,10 +97,31 @@ AFRAME.registerComponent("a-world", {
 			let cameraPos = document.getElementById("camera1").object3D.position;
 			let extrem = {
 				"z": [data.position.z + data.dimension.width/2, data.position.z - data.dimension.width/2],
-				"x": [data.position.x + 2, data.position.x -2]
+				"x": [data.position.x + 4, data.position.x - 4]
 			};
 			if(isOnSite(extrem, cameraPos)) window.location = data.url
 		});
+		dp.append(el, ()=>window.location = data.url);
+	}
+});
+
+AFRAME.registerPrimitive("a-wall", {
+	defaultComponents: {
+		geometry: {
+			primitive: 'plane',
+			height: 70,
+			width:10
+		},
+		material: {
+			shader: 'standard',
+			color: '#968a8a',
+			metalness: 0.1,
+			roughness: 0.9
+		},
+	},
+	mappings: {
+		height: 'geometry.height',
+		width: 'geometry.width',
 	}
 });
 
