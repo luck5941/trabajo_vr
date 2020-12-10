@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="js/utils.js"></script>
+	<script type="text/javascript" src="js/form.js"></script>
+</head>
+<body>
+	<div class="wrap">
+		<h1>¡Si! ¡Es aquí!</h1>
+		<p>Este formulario permite subir a la plataforma nuevos proyectos que se quieran exponer en la plataforma, de forma que se pueda compartir con todo el mundo!</p>
+		<form action="projects" method="PUT">
+			<div class="input_cont">
+				<label for="name">Nombre</label>
+				<input class="input" type="text" id="name" name="name">
+			</div>
+			<div class="input_cont">
+				<label for="emaill">Email</label>
+				<input class="input" type="email" name="emaill" id="emaill">
+			</div>
+			<div class="input_cont">
+				<label for="description">Breve descripción</label>
+				<textarea class="input" name="description" id="description" cols="30" rows="5"></textarea>
+			</div>
+			<div class="input_cont input_file">
+				<label for="img">Foto descriptiva</label>
+				<input class="input" id="img" type="file">
+			</div>
+			<div class="input_cont input_file">
+				<label for="video">Video presentación</label>
+				<input class="input" id="video" type="file">
+			</div>
+		</form>
+	</div>
+</body>
+</html>

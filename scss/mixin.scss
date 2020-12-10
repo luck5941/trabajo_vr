@@ -1,0 +1,6 @@
+@mixin border-radius($val1, $val2: $val1) {
+	border-top-left-radius: $val1 $val2;
+	border-top-right-radius: $val1 $val2;
+	border-bottom-right-radius: $val1 $val2;
+	border-bottom-left-radius: $val1 $val2;
+}
