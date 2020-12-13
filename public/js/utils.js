@@ -31,7 +31,7 @@ class DetectPosition {
 		this._objects = [];
 		this._max = 2000;
 		this._min = 500;
-		this._distance = 2;
+		this._distance = 4;
 		this._radius = 20;
 	}
 	get max() {

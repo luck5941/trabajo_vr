@@ -10,22 +10,26 @@ let dp = new DetectPosition();
 
 AFRAME.registerComponent("change-door-animation", {
 	schema: {
-		open: {default: false}
+		open: {default: false},
+		axis: {default: "x"},
+		dir: {default: 1}
 	},
 	init: function() {
 		let el = this.el;
 		let data = this.data;
 		data.position = el.object3D.position;
+		data.animation = {};
 		data.dimension = {};
 		data.dimension.width = el.getAttribute("width") || 1;
 		data.dimension.height = el.getAttribute("height") || 1;
-
-
-
+		data.animation.close = `${data.position.x} ${data.position.y} ${data.position.z}`;
+		data.animation.open = data.axis === 'x' ? `${data.position.x - data.dir*data.dimension.width} ${data.position.y} ${data.position.z}` 
+					: data.axis === 'y' ? `${data.position.x} ${data.position.y - data.dir*data.dimension.heigth} ${data.position.z}` 
+					: `${data.position.x } ${data.position.y} ${data.position.z - data.dir*data.dimension.width}`;
 
 		let changeState = function(){
-			if (data.open) el.components.animation.data.to = "15 4 -32.5"
-			else el.components.animation.data.to = "15 4 -37.5"
+			if (data.open) el.components.animation.data.to = data.animation.close
+			else el.components.animation.data.to = data.animation.open;
 			data.open = !data.open;
 		}
 
@@ -40,8 +44,8 @@ AFRAME.registerComponent("change-door-animation", {
 			if(isOnSite(extrem, cameraPos)) {
 				changeState()
 			} else {
-				if (data.open) el.components.animation.data.to = "15 4 -37.5"
-				else el.components.animation.data.to = "15 4 -32.5"
+				if (!data.open) el.components.animation.data.to = data.animation.close;
+				else el.components.animation.data.to = data.animation.open;
 			}
 		});
 
@@ -86,8 +90,10 @@ AFRAME.registerComponent("a-world", {
 		let el = this.el;
 		let data = this.data;
 		data.dimension = {};
-		data.dimension.width = el.getAttribute("width") || 1;
-		data.dimension.height = el.getAttribute("height") || 1;
+		let r = new THREE.Box3().setFromObject(el.object3D).getSize();
+		data.dimension.width = r.x
+		data.dimension.height = r.y
+		data.dimension.deepth = r.z
 		el.on("click", function() {
 			window.location = data.url
 		});
@@ -96,7 +102,7 @@ AFRAME.registerComponent("a-world", {
 			data.position = el.object3D.position;
 			let cameraPos = document.getElementById("camera1").object3D.position;
 			let extrem = {
-				"z": [data.position.z + data.dimension.width/2, data.position.z - data.dimension.width/2],
+				"z": [data.position.z + 4, data.position.z - 4],
 				"x": [data.position.x + 4, data.position.x - 4]
 			};
 			if(isOnSite(extrem, cameraPos)) window.location = data.url
