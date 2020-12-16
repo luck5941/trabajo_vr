@@ -1,5 +1,8 @@
+"use strict";
+
 HTMLElement.prototype.on = function(tipe, callback) {
 	return this.addEventListener(tipe, callback);
+    return this;
 }
 
 HTMLElement.prototype.rotateDeg = function(x, y, z) {
@@ -7,11 +10,13 @@ HTMLElement.prototype.rotateDeg = function(x, y, z) {
 	y *= y ? Math.PI/180 : 0;
 	z *= z ? Math.PI/180 : 0;
 	this.rotate(x, y, z);
+    return this;
 }
 HTMLElement.prototype.rotate = function(x, y, z) {
 	this.object3D.rotation.x = x;
 	this.object3D.rotation.y = y;
 	this.object3D.rotation.z = z;
+    return this;
 }
 
 
