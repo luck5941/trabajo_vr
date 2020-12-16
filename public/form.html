@@ -10,18 +10,18 @@
 </head>
 <body>
 	<div class="wrap">
-		<h1>¡Si! ¡Es aquí!</h1>
+		<h1>Crear proyectos</h1>
 		<p>Este formulario permite subir a la plataforma nuevos proyectos que se quieran exponer en la plataforma, de forma que se pueda compartir con todo el mundo!</p>
-		<form action="projects" method="PUT">
-			<div class="input_cont">
+		<form action="projects" method="POST">
+			<div class="input_cont_underline">
 				<label for="name">Nombre</label>
 				<input class="input" type="text" id="name" name="name">
 			</div>
-			<div class="input_cont">
+			<div class="input_cont_underline">
 				<label for="emaill">Email</label>
 				<input class="input" type="email" name="emaill" id="emaill">
 			</div>
-			<div class="input_cont">
+			<div class="input_cont_underline">
 				<label for="description">Breve descripción</label>
 				<textarea class="input" name="description" id="description" cols="30" rows="5"></textarea>
 			</div>
@@ -33,6 +33,9 @@
 				<label for="video">Video presentación</label>
 				<input class="input" id="video" type="file">
 			</div>
+            <div class="input_cont input_submit">
+			    <input type="submit" value="Envirar">
+            </div>
 		</form>
 	</div>
 </body>

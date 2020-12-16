@@ -1,6 +1,9 @@
+"use strict";
 let sleep = (t) => new Promise(resolve => setTimeout(resolve, t));
+
 HTMLElement.prototype.on = function(tipe, callback) {
-	return this.addEventListener(tipe, callback);
+	this.addEventListener(tipe, callback);
+    return this;
 }
 
 HTMLElement.prototype.rotateDeg = function(x, y, z) {
@@ -8,11 +11,13 @@ HTMLElement.prototype.rotateDeg = function(x, y, z) {
 	y *= y ? Math.PI/180 : 0;
 	z *= z ? Math.PI/180 : 0;
 	this.rotate(x, y, z);
+    return this;
 }
 HTMLElement.prototype.rotate = function(x, y, z) {
 	this.object3D.rotation.x = x;
 	this.object3D.rotation.y = y;
 	this.object3D.rotation.z = z;
+    return this;
 }
 
 
@@ -33,6 +38,7 @@ class DetectPosition {
 		this._min = 500;
 		this._distance = 4;
 		this._radius = 20;
+        this.camera = "camera1"
 	}
 	get max() {
 		return this._max;
@@ -50,6 +56,12 @@ class DetectPosition {
 		if (mn > 0 && mn < mx) this._min = mn;
 	}
 
+    get camera() {
+        return this
+    }
+    set camera(camera_id) {
+        this.camera = camera_id;
+    }
 	append(element, callback) {
 		if (!element.object3D) throw "Error: the element must be a 3D object";
 		if (typeof callback !== "function") throw "Error: the callback must be a function";
@@ -60,8 +72,8 @@ class DetectPosition {
 	_analyze = async function(i) {
 		let ox = this._objects[i][0].object3D.position.x;
 		let oz = this._objects[i][0].object3D.position.z;
-		let cx = document.getElementById("camera1").object3D.position.x;
-		let cz = document.getElementById("camera1").object3D.position.z;
+		let cx = document.getElementById(this._camera).object3D.position.x;
+		let cz = document.getElementById(this._camera).object3D.position.z;
 		//Use the manhatthan distance instead of euclidean distance for simplicy the operations
 		let md = Math.abs(ox-cx) + Math.abs(oz- cz);
 		if (md > this._radius) 
