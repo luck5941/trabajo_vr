@@ -38,7 +38,7 @@ class DetectPosition {
 		this._min = 500;
 		this._distance = 4;
 		this._radius = 20;
-        this.camera = "camera1"
+		this._camera = "camera1"
 	}
 	get max() {
 		return this._max;
@@ -56,12 +56,13 @@ class DetectPosition {
 		if (mn > 0 && mn < mx) this._min = mn;
 	}
 
-    get camera() {
-        return this
-    }
-    set camera(camera_id) {
-        this.camera = camera_id;
-    }
+	get camera() {
+		return this._camera;
+	}
+	set camera(camera_id) {
+		this._camera = camera_id;
+	}
+
 	append(element, callback) {
 		if (!element.object3D) throw "Error: the element must be a 3D object";
 		if (typeof callback !== "function") throw "Error: the callback must be a function";
@@ -72,6 +73,11 @@ class DetectPosition {
 	_analyze = async function(i) {
 		let ox = this._objects[i][0].object3D.position.x;
 		let oz = this._objects[i][0].object3D.position.z;
+		let camera = document.getElementById(this._camera)
+		if (!camera) {
+			await sleep(this._max*2);
+			return this._analyze(i);
+		}
 		let cx = document.getElementById(this._camera).object3D.position.x;
 		let cz = document.getElementById(this._camera).object3D.position.z;
 		//Use the manhatthan distance instead of euclidean distance for simplicy the operations
