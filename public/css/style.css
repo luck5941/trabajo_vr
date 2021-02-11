@@ -1,0 +1,136 @@
+/*
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	background-color: #75a5ae;
+	font-family: "Helvetiva", "Arial", sans-serif;
+}
+.wrap {
+	width: 80%;
+	max-width: 1080px;
+	display: block;
+	margin: auto;
+	background-color: #fefefe;
+	padding: 2%;
+	box-shadow: 4px 4px 9px;
+	border-top-left-radius: 5% 10%;
+	border-top-right-radius: 5% 10%;
+	border-bottom-right-radius: 5% 10%;
+	border-bottom-left-radius: 5% 10%;
+
+}
+.input_cont {
+	display: flex;
+	flex-direction: column;
+	width: 40%;
+	margin: 1% auto;
+	position: relative;
+
+}
+.input_cont::after {
+	content: "";
+	position: absolute;
+	bottom: 0%;
+	left: 50%;
+	width: 0%;
+	height: 2px;
+	background-color: #75a5ae;
+	transition-duration: .75s;
+	transition-property: left, width;
+}
+
+.input_cont label {
+	transform: scale(.8) translate(0px, 24px);
+	transition-duration: .75s;
+	transition-property: transform;
+}
+.input_cont .input {
+	border: none;
+
+}
+.input_cont.active::after {
+	width: 100%;
+	left: 0;
+}
+*/
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #75a5ae;
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+.wrap {
+  width: 80%;
+  max-width: 1080px;
+  display: block;
+  margin: auto;
+  background-color: #fefefe;
+  padding: 2%;
+  box-shadow: 4px 4px 9px rgba(0, 0, 0, 0.6);
+  border-top-left-radius: 5% 10%;
+  border-top-right-radius: 5% 10%;
+  border-bottom-right-radius: 5% 10%;
+  border-bottom-left-radius: 5% 10%;
+}
+.wrap h1 {
+  color: #75a5ae;
+  font-weight: 900;
+  margin: 5% 10%;
+}
+.wrap p {
+  width: 60%;
+  display: block;
+  margin: auto;
+}
+.wrap form {
+  margin-top: 4%;
+}
+
+.input_cont {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 3% auto;
+  position: relative;
+}
+.input_cont::after {
+  content: "";
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  background-color: #75a5ae;
+  transition-duration: 0.75s;
+  transition-property: left, width;
+}
+.input_cont .input {
+  border: none;
+  -webkit-appearance: none;
+  -mox-appearance: none;
+  padding-left: 14%;
+}
+.input_cont .input[type=file] {
+  display: none;
+}
+.input_cont:not(.input_file) label {
+  transform: scale(1.2) translate(72px, 16px);
+  transition-duration: 0.75s;
+  transition-property: transform;
+}
+.input_cont:not(.input_file).active::after {
+  width: 100%;
+  left: 0;
+}
+.input_cont:not(.input_file).active label {
+  transform: scale(0.8) translate(0px, 0px);
+}
+
+/*# sourceMappingURL=style.css.map */
